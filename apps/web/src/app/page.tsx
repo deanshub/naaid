@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-// import { doStuff } from "./actions/do-stuff";
+import { doStuff } from "./actions/do-stuff";
 
 export default function Page(): JSX.Element {
-  function handleSubmit(_formData: FormData): void {
-    void fetch("/api/do-stuff", { method: "POST" });
-  }
+  // function handleSubmit(_formData: FormData): void {
+  //   void fetch("/api/do-stuff", { method: "POST" });
+  // }
 
   return (
     <main className="flex flex-col items-center justify-between min-h-screen p-24">
@@ -35,8 +35,8 @@ export default function Page(): JSX.Element {
       </div>
 
       <form
-        // action={doStuff}
-        action={handleSubmit}
+        action={doStuff}
+        // action={handleSubmit}
         className="relative flex place-items-center flex-1"
       >
         <button type="submit">

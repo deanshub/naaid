@@ -1,5 +1,6 @@
 import { subcommands, command, run, restPositionals } from "cmd-ts";
 import execa from "execa";
+import { implementUseDirectives } from "./directives";
 
 const dev = command({
   name: "dev",
@@ -7,6 +8,7 @@ const dev = command({
     rest: restPositionals(),
   },
   handler: async ({ rest }) => {
+    await implementUseDirectives(process.cwd());
     await execa("next", ["dev", ...rest], {
       stdio: "inherit",
     });

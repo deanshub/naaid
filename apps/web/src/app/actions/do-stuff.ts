@@ -22,3 +22,6 @@ export async function doStuff(): void {
     // ignore
   }
 }
+
+// export const type = "action";
+// @type = "action"
