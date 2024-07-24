@@ -1,4 +1,4 @@
-"use server";
+"use api";
 
 import { exec } from "node:child_process";
 import { appendFile } from "node:fs/promises";
