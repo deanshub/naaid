@@ -34,21 +34,9 @@ async function searchTsFiles(
       // If it's a directory, recursively search it
       await searchTsFiles(rootAppDir, filePath);
     } else if (extname(file) === ".ts") {
-      // If it's a .ts file, check its content
-      const content = await readFile(filePath, "utf8");
-      const lines = content.split("\n");
+      const isApiFile = await removeUseApiDirective(filePath);
 
-      if (
-        lines[0].trim() === '"use api";' ||
-        lines[0].trim() === "'use api';"
-      ) {
-        // Replace the first line with 'use server';
-        // lines[0] = lines[0].replace("api", "server");
-        // const newContent = lines.join("\n");
-        const newContent = lines.slice(1).join("\n");
-
-        // Write the modified content back to the file
-        await writeFile(filePath, newContent, "utf8");
+      if (isApiFile) {
         await generateRouteFile(rootAppDir, filePath);
         await generateSubmitHandler(rootAppDir, filePath);
 
@@ -56,6 +44,23 @@ async function searchTsFiles(
       }
     }
   }
+}
+
+async function removeUseApiDirective(filePath: string): Promise<boolean> {
+  // If it's a .ts file, check its content
+  const content = await readFile(filePath, "utf8");
+  const lines = content.split("\n");
+
+  const isApiFile =
+    lines[0].trim() === '"use api";' || lines[0].trim() === "'use api';";
+
+  if (isApiFile) {
+    const newContent = lines.slice(1).join("\n");
+
+    // Write the modified content back to the file
+    await writeFile(filePath, newContent, "utf8");
+  }
+  return isApiFile;
 }
 
 async function generateRouteFile(

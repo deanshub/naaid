@@ -43,5 +43,8 @@ module.exports = {
   // add rules configurations here
   rules: {
     "import/no-default-export": "off",
+    "no-console": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-misused-promises": "off",
   },
 };
